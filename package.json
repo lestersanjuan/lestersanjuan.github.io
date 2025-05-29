@@ -14,8 +14,6 @@
     "@mui/material": "^6.4.3",
     "@mui/x-data-grid": "^7.26.0",
     "@mui/x-date-pickers": "^7.26.0",
-    "boostrap": "^2.0.0",
-    "bootstrap": "^5.3.3",
     "dayjs": "^1.11.13",
     "mui": "^0.0.1",
     "react": "^19.0.0",
@@ -26,6 +24,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
+    "grunt": "^1.6.1",
     "typescript": "^4.9.3",
     "vite": "^4.5.9"
   }
