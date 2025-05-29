@@ -20,38 +20,31 @@ interface ReportProps {
   date: string;
 }
 
+const initialFormValues: FormValues = {
+  shiftLeads: "",
+  generalNotes: "",
+  late: "",
+  employeePerformance: "",
+  refills: "",
+  customerComments: "",
+  previousShiftNotes: "",
+};
+
 function Report({ date }: ReportProps): JSX.Element {
-  const [formValues, setFormValues] = useState<FormValues>({
-    shiftLeads: "",
-    generalNotes: "",
-    late: "",
-    employeePerformance: "",
-    refills: "",
-    customerComments: "",
-    previousShiftNotes: "",
-  });
-  const [localStorage, setLocalStorage] = useState<LocalStorage>({});
+  const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
+  const [storageData, setStorageData] = useState<LocalStorage>({}); // renamed from localStorage to avoid confusion
   const [previousDate, setPreviousDate] = useState<string>(date);
 
   useEffect(() => {
     if (date !== previousDate) {
-      const temp = date;
-      if (temp in localStorage) {
-        setFormValues(localStorage[temp]);
+      if (date in storageData) {
+        setFormValues(storageData[date]);
       } else {
-        setFormValues({
-          shiftLeads: "",
-          generalNotes: "",
-          late: "",
-          employeePerformance: "",
-          refills: "",
-          customerComments: "",
-          previousShiftNotes: "",
-        });
+        setFormValues(initialFormValues);
       }
       setPreviousDate(date);
     }
-  }, [date, localStorage, previousDate]);
+  }, [date, storageData, previousDate]);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -61,8 +54,8 @@ function Report({ date }: ReportProps): JSX.Element {
       ...prev,
       [name]: value,
     }));
-    setLocalStorage((prevLocalStorage) => ({
-      ...prevLocalStorage,
+    setStorageData((prev) => ({
+      ...prev,
       [date]: {
         ...formValues,
         [name]: value,
@@ -71,8 +64,8 @@ function Report({ date }: ReportProps): JSX.Element {
   };
 
   const handleSave = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    setLocalStorage((prevLocalStorage) => ({
-      ...prevLocalStorage,
+    setStorageData((prev) => ({
+      ...prev,
       [date]: formValues,
     }));
   };
