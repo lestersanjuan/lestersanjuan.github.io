@@ -1,0 +1,56 @@
+.top{
+    display: inline;
+    font-size: 1.2rem;
+}
+
+.top.items{
+    margin-left: 10px;
+
+}
+
+.customCheckbox .MuiSvgIcon-root {
+    font-size: 20px;
+}
+
+.customCheckBox{
+    border: 3px solid black;
+}
+h2{
+    margin-bottom: 3px;
+}
+
+textarea{
+    width: 95%;
+    resize: vertical;
+    font-size: 1.25em;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.content>label {
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Add this line */
+    
+}
+
+textarea::placeholder {
+    color: rgb(116, 116, 116); /* Change the color to gray */
+}
+
+.area-notes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 10px;
+}
