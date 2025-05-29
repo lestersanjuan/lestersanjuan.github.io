@@ -1,0 +1,12 @@
+title: Daily Report
+baseurl: ""
+url: ""
+
+exclude:
+  - node_modules
+  - package.json
+  - package-lock.json
+  - README.md
+  - src
+  - tsconfig.json
+  - vite.config.ts
