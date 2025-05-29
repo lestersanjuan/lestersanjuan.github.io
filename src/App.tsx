@@ -6,18 +6,20 @@ import Inventory from "./components/Inventory/Inventory";
 import Assessment from "./components/Assessment/Assessment";
 import Schedule from "./components/Schedule/Schedule";
 import Daily from "./components/DailyReport1/DailyReport1";
-import "./App.css"
+import Home from "./components/Home/Home";
+import "./App.css";
 function App() {
   return (
     <BrowserRouter>
       <NavBar />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/Schedule" element={<Schedule />} />
         <Route path="/DailyReport" element={<DailyReport />} />
         <Route path="/Inventory" element={<Inventory />} />
         <Route path="/NavBar" element={<DailyReport />} />
-        <Route path="/Assessment" element = {<Assessment />} />
-        <Route path="/Daily" element = {<Daily />} />
+        <Route path="/Assessment" element={<Assessment />} />
+        <Route path="/Daily" element={<Daily />} />
       </Routes>
     </BrowserRouter>
   );

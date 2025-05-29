@@ -19,8 +19,7 @@ function NavBar() {
         <div className="right items">
           <a href="/">Home</a>
           <a href="/schedule">Schedule</a>
-          <a href="/about">About</a>
-          <a href="/contact">Contact</a>
+          <a href="/Inventory">EOW Inventory</a>
           <a href="/daily" id="daily-report">
             Daily Report
           </a>
