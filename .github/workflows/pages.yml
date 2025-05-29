@@ -30,7 +30,7 @@ jobs:
           node-version: "20" # satisfies react-router ≥7
           cache: "npm"
       - run: npm ci
-      - run: npm run dev # outputs Vite bundle (dist/) into the repo
+      - run: npm run build # outputs Vite bundle (dist/) into the repo
 
       # 3 ▸ Ruby / Bundler (Jekyll plugins and github-pages gem)
       - name: Setup Ruby

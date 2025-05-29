@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import {
   Box,
   Button,
@@ -12,11 +12,27 @@ import {
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs"; // Make sure to import dayjs
-import "./DailyReport.css"; // Your custom stylesheet
+import dayjs, { Dayjs } from "dayjs";
+import "./DailyReport.css";
 
-// Define initial form values
-const initialFormValues = {
+interface FormValues {
+  teaQuality: boolean;
+  bobaQuality: boolean;
+  weeklyLeadership: boolean;
+  shiftLeadsSoups: string;
+  generalNotes: string;
+  anyoneLate: string;
+  employeePerformance: string;
+  previousSupervisor: string;
+  previousShiftNotes: string;
+  customerComments: string;
+}
+
+interface Reports {
+  [key: string]: FormValues;
+}
+
+const initialFormValues: FormValues = {
   teaQuality: false,
   bobaQuality: false,
   weeklyLeadership: false,
@@ -29,13 +45,12 @@ const initialFormValues = {
   customerComments: "",
 };
 
-function DailyReport1() {
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [formValues, setFormValues] = useState(initialFormValues);
-  // Object to store reports keyed by date (e.g., "YYYY-MM-DD")
-  const [reports, setReports] = useState({});
+function DailyReport1(): JSX.Element {
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
+  const [reports, setReports] = useState<Reports>({});
 
-  const handleDateChange = (newValue) => {
+  const handleDateChange = (newValue: Dayjs | null): void => {
     setSelectedDate(newValue);
     if (newValue) {
       const dateKey = newValue.format("YYYY-MM-DD");
@@ -49,7 +64,7 @@ function DailyReport1() {
     }
   };
 
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, checked } = event.target;
     setFormValues((prev) => ({
       ...prev,
@@ -57,7 +72,7 @@ function DailyReport1() {
     }));
   };
 
-  const handleTextChange = (event) => {
+  const handleTextChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
     setFormValues((prev) => ({
       ...prev,
@@ -65,7 +80,7 @@ function DailyReport1() {
     }));
   };
 
-  const saveValue = () => {
+  const saveValue = (): void => {
     if (!selectedDate) {
       alert("Please select a date first");
       return;
@@ -97,7 +112,7 @@ function DailyReport1() {
                 views={["year", "month", "day"]}
                 value={selectedDate}
                 onChange={handleDateChange}
-                renderInput={(params) => <TextField {...params} fullWidth />}
+                slotProps={{ textField: { fullWidth: true } }}
               />
             </LocalizationProvider>
           </Grid>
