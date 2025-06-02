@@ -1,0 +1,26 @@
+
+
+.ag-row-selected .highlight-column {
+  background-color: #e6f3ff !important;
+}
+
+.light-color{
+    color: rgb(197, 197, 197);
+}
+
+.other-rows{
+    background-color: white;
+}
+
+.graph-container{
+    justify-content: center;
+    display: flex;
+}
+
+.date{
+    width: 90%;
+}
+.meow{
+    width: 90%;
+    height: 100vh;
+}
