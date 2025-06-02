@@ -861,7 +861,107 @@ const inventoryRows = [
     boxes: 1,
   },
 ];
+const inventoryEmpty = [
+  { itemName: "Boba-Brown (6/box)",            weekStart: null, inventoryAdded: null, weekEnd: null, amount: null, boxes: 6 },
+  { itemName: "Boba-White (6/box)",            weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "Cream Pudding Powder (20/box)", weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 20 },
+  { itemName: "Mochi Powder (20/box)",         weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 20 },
+  { itemName: "Cheese Foam Powder (20/box)",   weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 20 },
+  { itemName: "Pudding Powder (20/box)",       weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 20 },
+  { itemName: "Casava/Starch Powder (20/box)", weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 20 },
+  { itemName: "Plain Jelly Powder (10/box)",   weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 10 },
+  { itemName: "Non-Dairy Creamer (20/box)",    weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 20 },
+  { itemName: "Instant Q Jelly Powder (10/box)",weekStart:null, inventoryAdded:null, weekEnd:null, order:null, amount:null, boxes:10 },
+  { itemName: "Black Sesame (8/box)",          weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 8 },
+  { itemName: "Grapefruit Syrup (4/box)",      weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 4 },
+  { itemName: "Passionfruit Syrup (4/box)",    weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 4 },
+  { itemName: "Mango Syrup (4/box)",           weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 4 },
+  { itemName: "Black Sugar (box)",             weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Wintermelon Bricks (20/box)",   weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 20 },
+  { itemName: "White Peach Oolong Tea (30/box)",weekStart:null, inventoryAdded:null, weekEnd:null, order:null, amount:null, boxes:30 },
+  { itemName: "Ceylon Black Tea (96/box)",     weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 96 },
+  { itemName: "Jasmine Tea (108/box)",         weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 108 },
+  { itemName: "Roasted Oolong Tea (108/box)",  weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 108 },
+  { itemName: "Four Seasons Tea (142/box)",    weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 142 },
+  { itemName: "Thai Tea (30/box)",             weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 30 },
+  { itemName: "Honey Syrup (6/box)",           weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "Grass Jelly Can (6/box) – Herb Juice",weekStart:null, inventoryAdded:null, weekEnd:null, order:null, amount:null, boxes:6 },
+  { itemName: "Red Bean (18/box)",             weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 18 },
+  { itemName: "Condensed Milk (Large) 6/box",  weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "Condensed Milk (Small) 24/box", weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 24 },
+  { itemName: "Liquid Cane Sugar (4/box)",     weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 4 },
+  { itemName: "Agar Boba (6/box)",             weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "Lychee Jelly (4/box)",          weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 4 },
+  { itemName: "Cups – 700 ml",                 weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Cups – 500 ml",                 weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Cup Lids",                      weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Karat Paperboard w/Handle",     weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "PE Clear 4-Cup Bags",           weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Karat 4-Cup Holder",            weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Large Order Box (25/pack)",     weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 25 },
+  { itemName: "2 oz Sample Cups",              weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Straws – Large",                weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Straws – Small",                weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Togo Bag – 4 Drinks",           weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Togo Bag – 2 Drinks",           weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Seal Roll (6/box)",             weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "Hokkaido Powder (20/box)",      weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 20 },
+  { itemName: "Matcha Powder (10/box)",        weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 10 },
+  { itemName: "Chocolate Powder (20 bags)",    weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 20 },
+  { itemName: "Orange",                        weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Lemon",                         weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Grapefruit",                    weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Fresh Strawberry",              weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Mango",                         weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Yakult",                        weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Receipt Paper",                 weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Label Paper (32/box)",          weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 32 },
+  { itemName: "Whole Milk (2/box)",            weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 2 },
+  { itemName: "Heavy Cream (6/box)",           weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "White Sugar (25 lb units)",     weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 25 },
+  { itemName: "Evaporated Milk (12/box)",      weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 12 },
+  { itemName: "Strawberry Jam (2/pack)",       weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 2 },
+  { itemName: "Caramel Sauce",                 weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Sea Salt",                      weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Imitation Vanilla Extract",     weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Organic Milk (3/box)",          weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 3 },
+  { itemName: "Cream Cheese",                  weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Almond Milk (6/box)",           weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "Oat Milk (6/box)",              weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "Oreo Cookies",                  weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Dried Mango Slices",            weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Napkin (4-bundle pack)",        weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 4 },
+  { itemName: "Trash Bag – White",             weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Trash Bag – Black",             weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Masking Tape (Yellow, 6/pack)", weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "Packaging Tape (Clear, 6/box)", weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "White Rags",                    weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Yellow Rags",                   weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Dish Soap",                     weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Sponges",                       weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Bleach (3/box)",                weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 3 },
+  { itemName: "Pine-Sol / Fabuloso",           weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Comet / Ajax (6/pack)",         weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 6 },
+  { itemName: "Styrofoam Cups",                weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Gloves",                        weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Masks",                         weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Sanitizer",                     weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Toilet Paper",                  weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Paper Towel (12 ct)",           weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 12 },
+  { itemName: "Hand Soap (4/pack)",            weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 4 },
+  { itemName: "Biscoff Cookies – Costco",      weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Kataifi",                       weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Tajin (2 ct)",                  weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 2 },
+  { itemName: "Chamoy (big/small)",            weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Lemon Juice (2/pack)",          weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 2 },
+  { itemName: "Toilet Seat Cover",             weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 },
+  { itemName: "Mop Head",                      weekStart: null, inventoryAdded: null, weekEnd: null, order: null, amount: null, boxes: 1 }
+];
+
+//Current TODOs: implement on change dates
+
 function Inventory() {
+
   function DatePickerOnlySunday() {
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -872,6 +972,7 @@ function Inventory() {
           }}
           format="MM/DD/YYYY"
           disablePast={false}
+          value={selectedDate}
         />
       </LocalizationProvider>
     );
@@ -892,12 +993,16 @@ function Inventory() {
   function handleChange() {
     console.log("clicked!");
   }
+
+
+
   function suggestedOrderByBoxCalculator(params) {
     const usage = usageGetter(params);
     if (
       typeof params.data.weekEnd === "string" ||
       params.data.weekEnd === null
     ) {
+      console.log("hello")
       return "N/A";
     }
     if (Math.round((usage * 2 - params.data.weekEnd) / params.data.boxes) < 0) {
@@ -906,6 +1011,10 @@ function Inventory() {
     return Math.round((usage * 2 - params.data.weekEnd) / params.data.boxes);
   }
 
+
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const currentDate = new Date().getDay();
+  })
   const [colData, setColData] = useState([
     {
       field: "itemName",
@@ -916,7 +1025,7 @@ function Inventory() {
       enableClickSelection: true,
     },
     { field: "weekStart", headerName: "Week Start", flex: 1, editable: true },
-    { field: "inventoryAdded", headerName: "InventoryAdded", flex: 1 },
+    { field: "inventoryAdded", headerName: "InventoryAdded", editable: true, flex: 1 },
     { field: "weekEnd", headerName: "Week End", flex: 1, editable: true },
     {
       field: "usage",
@@ -929,11 +1038,25 @@ function Inventory() {
       headerName: "Order (by Box)",
       flex: 1,
       editable: true,
+    
+      // ⇢ Runs every time any cell in the row changes
+      valueGetter: (params) => {
+        if (params.data.order) return params.data.order;          // user override
+    
+        // same logic you already wrote
+        const usage   = usageGetter(params);
+        const { weekEnd, boxes } = params.data;
+    
+        if (typeof weekEnd === "string" || weekEnd == null) return "N/A";
+    
+        const calc = Math.round((usage * 2 - weekEnd) / boxes);
+        return calc < 0 ? "N/A" : calc;
+      },
+    
+      // ⇢ Purely cosmetic renderer
       cellRenderer: (params) =>
-        params.value || (
-          <span className="light-color">
-            Suggested: {suggestedOrderByBoxCalculator(params)}
-          </span>
+        params.data.order ?? (                      // real order entered?
+          <span className="light-color">Suggested: {params.value}</span>
         ),
     },
     { field: "amount", headerName: "Amount By Delivery" },
@@ -943,7 +1066,8 @@ function Inventory() {
     },
   ]);
 
-  const [rowData, setRowData] = useState(inventoryRows);
+  const [rowData, setRowData] = useState(inventoryEmpty);
+
 
   const defaultColDef = useMemo(() => {
     return {
