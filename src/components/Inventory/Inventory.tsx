@@ -1,5 +1,5 @@
 import { AgGridReact } from "ag-grid-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import {
@@ -1714,10 +1714,13 @@ interface TestDataInterface {
   [key: string]: any[];
 }
 
-let testData: TestDataInterface = {};
-
 function Inventory() {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const now = dayjs();
+    const nowNumber = now.day();
+    const changeToCorrect = now.subtract(nowNumber, "day");
+    return changeToCorrect;
+  });
   const [colData, setColData] = useState([
     {
       field: "itemName",
@@ -1774,7 +1777,15 @@ function Inventory() {
     },
   ]);
 
+  const [testData, setTestData] = useState<TestDataInterface>({});
   const [rowData, setRowData] = useState(inventoryEmpty);
+  useEffect(() => {
+    testData[selectedDate.format("YYYY-MM-DD")] = inventoryEmpty;
+    console.log(
+      testData,
+      "UseEffect Test Data, make sure it runs when page renders"
+    );
+  }, []);
   function DatePickerOnlySunday() {
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -1792,24 +1803,35 @@ function Inventory() {
     );
   }
   function onChangeDate(params) {
+    if (!params) return;
+
     const testDate = dayjs(params);
-    testData[testDate.toISOString()] = inventoryEmpty;
-    console.log(testDate.toISOString(), testDate);
+    const testDateString = testDate.format("YYYY-MM-DD");
+
     setSelectedDate(testDate);
-    if (testDate.toISOString() in testData) {
-      setSelectedDate(testData[testDate]);
+
+    if (testDateString in testData) {
+      setRowData(testData[testDateString]);
     } else {
-      testData[testDate.toISOString()] = inventoryEmpty;
-      setRowData(inventoryEmpty);
+      setTestData((prev) => ({
+        ...prev,
+        [testDateString]: [...inventoryEmpty],
+      }));
+      setRowData([...inventoryEmpty]);
     }
   }
 
-  //testData[currentDate][row/actual item].(THINGS LIKE WEEKEND WEEK START ETC.)
   function onGridChange(params) {
-    console.log(params);
+    const dateKey = selectedDate.format("YYYY-MM-DD");
     const currentRowChangedName = params.data;
-    testData[selectedDate.toISOString()][0] = currentRowChangedName;
-    console.log(testData);
+    const newData = [...testData[dateKey]];
+    newData[params.rowIndex] = currentRowChangedName;
+
+    setTestData((prev) => ({
+      ...prev,
+      [dateKey]: newData,
+    }));
+    setRowData(newData);
   }
 
   function usageGetter(params) {
@@ -1822,21 +1844,6 @@ function Inventory() {
     }
 
     return weekStart + inventoryAdded - weekEnd;
-  }
-
-  function suggestedOrderByBoxCalculator(params) {
-    const usage = usageGetter(params);
-    if (
-      typeof params.data.weekEnd === "string" ||
-      params.data.weekEnd === null
-    ) {
-      console.log("hello");
-      return "N/A";
-    }
-    if (Math.round((usage * 2 - params.data.weekEnd) / params.data.boxes) < 0) {
-      return "N/A";
-    }
-    return Math.round((usage * 2 - params.data.weekEnd) / params.data.boxes);
   }
 
   const defaultColDef = useMemo(() => {
@@ -1858,7 +1865,7 @@ function Inventory() {
     <>
       <button>take from previous week</button>
       <button>Reset Inventory</button>
-      <button>Reset Week</button>x
+      <button>Reset Week</button>
       <div className="box" id="date">
         <h3>Date</h3>
         <DatePickerOnlySunday />
