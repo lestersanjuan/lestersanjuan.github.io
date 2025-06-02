@@ -9,6 +9,7 @@
   border-bottom: 2px solid black;
   margin-bottom: 3vh;
   width: 100vw;
+  z-index: 10000;
 }
 .logo{
   padding: 10px;
