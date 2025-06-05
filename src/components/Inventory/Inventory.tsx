@@ -1779,13 +1779,7 @@ function Inventory() {
 
   const [testData, setTestData] = useState<TestDataInterface>({});
   const [rowData, setRowData] = useState(inventoryEmpty);
-  useEffect(() => {
-    testData[selectedDate.format("YYYY-MM-DD")] = inventoryEmpty;
-    console.log(
-      testData,
-      "UseEffect Test Data, make sure it runs when page renders"
-    );
-  }, []);
+
   function DatePickerOnlySunday() {
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -1804,34 +1798,44 @@ function Inventory() {
   }
   function onChangeDate(params) {
     if (!params) return;
-
     const testDate = dayjs(params);
-    const testDateString = testDate.format("YYYY-MM-DD");
-
     setSelectedDate(testDate);
-
-    if (testDateString in testData) {
-      setRowData(testData[testDateString]);
-    } else {
-      setTestData((prev) => ({
-        ...prev,
-        [testDateString]: [...inventoryEmpty],
-      }));
-      setRowData([...inventoryEmpty]);
-    }
   }
 
-  function onGridChange(params) {
-    const dateKey = selectedDate.format("YYYY-MM-DD");
-    const currentRowChangedName = params.data;
-    const newData = [...testData[dateKey]];
-    newData[params.rowIndex] = currentRowChangedName;
+  const makeBlankRows = () => inventoryEmpty.map((r) => ({ ...r }));
 
-    setTestData((prev) => ({
-      ...prev,
-      [dateKey]: newData,
-    }));
-    setRowData(newData);
+  useEffect(() => {
+    const key = selectedDate.format("YYYY-MM-DD");
+    const keyPastWeek = selectedDate.subtract(7, "day").format("YYYY-MM-DD");
+    console.log(keyPastWeek);
+    setTestData((prev) => {
+      //If the you want to go to a new week with no information on it then u do the auto input
+      if (prev[key]) {
+        return prev;
+      } // already have data
+      const updated = { ...prev, [key]: makeBlankRows() };
+      console.log(updated);
+      if (prev[keyPastWeek]) {
+        console.log("this is the prev[keypastweek] ->", prev[keyPastWeek]);
+        for (let i = 0; i < prev[keyPastWeek].length; i++) {
+          updated[key][i].weekStart = prev[keyPastWeek][i].weekEnd;
+        }
+      }
+      return updated;
+    });
+  }, [selectedDate]);
+
+  useEffect(() => {
+    setRowData(testData[selectedDate.format("YYYY-MM-DD")] ?? []);
+  }, [selectedDate, testData]);
+
+  function onGridChange({ data, rowIndex }) {
+    const key = selectedDate.format("YYYY-MM-DD");
+    setTestData((prev) => {
+      const rows = [...prev[key]]; // clone array
+      rows[rowIndex] = { ...data }; // clone row
+      return { ...prev, [key]: rows }; // new object ref
+    });
   }
 
   function usageGetter(params) {
