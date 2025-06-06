@@ -1730,14 +1730,28 @@ function Inventory() {
       checkboxes: false,
       enableClickSelection: true,
     },
-    { field: "weekStart", headerName: "Week Start", flex: 1, editable: true },
+    {
+      field: "weekStart",
+      headerName:
+        "(" +
+        selectedDate.subtract(7, "day").format("MM/DD") +
+        ")" +
+        " Week Start ",
+      flex: 1,
+      editable: true,
+    },
     {
       field: "inventoryAdded",
       headerName: "InventoryAdded",
       editable: true,
       flex: 1,
     },
-    { field: "weekEnd", headerName: "Week End", flex: 1, editable: true },
+    {
+      field: "weekEnd",
+      headerName: "(" + selectedDate.format("MM/DD") + ")" + " Week End",
+      flex: 1,
+      editable: true,
+    },
     {
       field: "usage",
       headerName: "Usage",
@@ -1770,7 +1784,7 @@ function Inventory() {
           <span className="light-color">Suggested: {params.value}</span>
         ),
     },
-    { field: "amount", headerName: "Amount By Delivery" },
+    { field: "amount", headerName: "Amount By Delivery", flex: 1 },
     {
       field: "boxes",
       hide: true,
@@ -1870,20 +1884,29 @@ function Inventory() {
       <button>take from previous week</button>
       <button>Reset Inventory</button>
       <button>Reset Week</button>
-      <div className="box" id="date">
-        <h3>Date</h3>
-        <DatePickerOnlySunday />
-      </div>
-      <div className="graph-container">
-        <div className="meow ag-theme-alpine">
-          <AgGridReact
-            rowData={rowData}
-            columnDefs={colData}
-            enterNavigatesVerticallyAfterEdit={true}
-            defaultColDef={defaultColDef}
-            rowSelection="multiple"
-            onCellValueChanged={onGridChange}
-          />
+      <div className="mega-container">
+        <div className="box" id="date">
+          <span className="datepicker"></span>
+        </div>
+        <div className="graph-container">
+          <div className="grid-container ag-theme-alpine">
+            <div className="date-picker-row-container">
+              <div className="itemName-container">
+                <h1 id="title">End Of Week Inventory!</h1>
+              </div>
+              <div className="date-picker-only-sunday-object">
+                <DatePickerOnlySunday />
+              </div>
+            </div>
+            <AgGridReact
+              rowData={rowData}
+              columnDefs={colData}
+              enterNavigatesVerticallyAfterEdit={true}
+              defaultColDef={defaultColDef}
+              rowSelection="multiple"
+              onCellValueChanged={onGridChange}
+            />
+          </div>
         </div>
       </div>
     </>

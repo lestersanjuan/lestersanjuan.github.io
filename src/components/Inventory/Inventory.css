@@ -1,4 +1,6 @@
-
+.mega-container{
+    margin: 0;
+}
 
 .ag-row-selected .highlight-column {
   background-color: #e6f3ff !important;
@@ -11,7 +13,9 @@
 .other-rows{
     background-color: white;
 }
-
+#title{
+    display: inline;
+}
 .graph-container{
     justify-content: center;
     display: flex;
@@ -20,7 +24,22 @@
 .date{
     width: 90%;
 }
-.meow{
+.grid-container{
     width: 90%;
     height: 100vh;
+    margin-top: 2vh;
 }
+.date-picker-row-container{
+    display: flex;
+    justify-content: end;
+}
+.itemName-container{
+    padding-right: 12px;
+    margin: 0;
+    flex-grow: 1;
+    align-self: end;
+}
+.date-picker-only-sunday-object{
+    margin-bottom: 5px;
+}
+
