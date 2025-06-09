@@ -1881,9 +1881,6 @@ function Inventory() {
   }, []);
   return (
     <>
-      <button>take from previous week</button>
-      <button>Reset Inventory</button>
-      <button>Reset Week</button>
       <div className="mega-container">
         <div className="box" id="date">
           <span className="datepicker"></span>
@@ -1893,6 +1890,11 @@ function Inventory() {
             <div className="date-picker-row-container">
               <div className="itemName-container">
                 <h1 id="title">End Of Week Inventory!</h1>
+              </div>
+              <div className="week-buttons">
+                <button>Previous week</button>
+                <button>Reset Inventory</button>
+                <button>Reset Week</button>
               </div>
               <div className="date-picker-only-sunday-object">
                 <DatePickerOnlySunday />

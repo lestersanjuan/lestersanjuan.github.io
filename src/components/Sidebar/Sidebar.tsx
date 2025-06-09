@@ -9,6 +9,7 @@ import {
 
 import "./Sidebar.css";
 export default function Sidebar() {
+  console.log("meow");
   return (
     <>
       <nav className="sidebar">
@@ -20,7 +21,7 @@ export default function Sidebar() {
             <a href="Inventory" className="side-link">
               <FontAwesomeIcon
                 icon={faWarehouse}
-                size="xl"
+                size="2xl"
                 className="FontAwesome"
               />
               <span className="link-text">EOW Inventory</span>
@@ -30,7 +31,7 @@ export default function Sidebar() {
             <a href="/Daily" className="side-link">
               <FontAwesomeIcon
                 icon={faCalendar}
-                size="xl"
+                size="2xl"
                 className="FontAwesome"
               />
               <span className="link-text">Daily Report</span>
@@ -40,7 +41,7 @@ export default function Sidebar() {
             <a href="/Schedule" className="side-link">
               <FontAwesomeIcon
                 icon={faNewspaper}
-                size="xl"
+                size="2xl"
                 className="FontAwesome"
               />
               <span className="link-text">Schedule</span>
