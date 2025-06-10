@@ -1881,7 +1881,7 @@ function Inventory() {
   }, []);
   return (
     <>
-      <div className="mega-container">
+      <div className="mega-container light-blue">
         <div className="box" id="date">
           <span className="datepicker"></span>
         </div>
@@ -1896,7 +1896,7 @@ function Inventory() {
                 <button>Reset Inventory</button>
                 <button>Reset Week</button>
               </div>
-              <div className="date-picker-only-sunday-object">
+              <div className="date-picker-only-sunday-object white">
                 <DatePickerOnlySunday />
               </div>
             </div>

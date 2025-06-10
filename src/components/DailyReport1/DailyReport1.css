@@ -2,7 +2,9 @@ html,
 body {
     margin: 0;
     padding: 0;
-    font-family:'Inter', Tahoma, Geneva, Verdana, sans-serif
+    top: 0;
+    font-family:'Inter', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: aliceblue;
 }
 
 .container {
@@ -10,11 +12,21 @@ body {
     grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr 0.1fr;
     grid-template-rows: max-content 2fr;
     gap: 10px;
-    margin: 1px;
-    height: 100vh;
+    top: 0;
+    height: 125%;
     width: 100%;
     box-sizing: border-box;
-    margin-top: 5vh;
+    padding-top: 5vh;
+    padding-bottom: 10vh;
+    margin: 0;
+    
+}
+.light-blue{
+    background-color: rgb(189, 224, 255);
+}
+
+.white{
+    background-color: white;
 }
 
 h1{
@@ -69,7 +81,7 @@ h1{
 .report {
     color: rgb(0, 0, 0);
     border-radius: 10px;
-    border: 1px solid black;
+    filter: drop-shadow(0 0 0.12rem rgb(149, 149, 149));
 }
 
 .report-styling {
@@ -80,5 +92,8 @@ h1{
 
 .report>h2 {
     margin: 10px;
+}
 
+.small-text{
+    font-size: 1rem;
 }

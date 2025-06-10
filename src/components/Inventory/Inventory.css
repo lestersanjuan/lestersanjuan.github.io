@@ -19,7 +19,7 @@
 .graph-container{
     justify-content: center;
     display: flex;
-    margin-bottom: 10vh;
+    padding-bottom: 10vh;
 }
 
 .date{
@@ -28,8 +28,8 @@
 .grid-container{
     width: 90%;
     height: 100vh;
-    margin-top: 5vh;
-    margin-bottom: 10vh;
+    padding-top: 5vh;
+    padding-bottom: 10vh;
 }
 .date-picker-row-container{
     display: flex;
@@ -74,3 +74,10 @@
     margin-bottom: 5px;
 }
 
+.light-blue{
+    background-color: rgb(189, 224, 255);
+}
+
+.white{
+    background-color: white;
+}

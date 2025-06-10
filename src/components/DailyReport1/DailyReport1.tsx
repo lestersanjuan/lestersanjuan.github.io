@@ -10,8 +10,8 @@ function Daily() {
   };
 
   return (
-    <div className="container">
-      <div className="box" id="heading">
+    <div className="container light-blue">
+      <div className="box light-blue" id="heading">
         <h1>Daily Report</h1>
       </div>
       <div className="box" id="date">
@@ -23,13 +23,13 @@ function Daily() {
           onChange={handleDateChange}
         />
       </div>
-      <div className="box report" id="day-shift">
+      <div className="box report white" id="day-shift">
         <h2>Day shift</h2>
         <div className="report-styling">
           <Report date={selectedDate} />
         </div>
       </div>
-      <div className="box report" id="night-shift">
+      <div className="box report white" id="night-shift">
         <h2>Night shift</h2>
         <div className="report-styling">
           <Report date={selectedDate} />
