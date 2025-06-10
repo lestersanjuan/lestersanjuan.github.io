@@ -8,6 +8,7 @@ import Schedule from "./components/Schedule/Schedule";
 import Daily from "./components/DailyReport1/DailyReport1";
 import Home from "./components/Home/Home";
 import Sidebar from "./components/Sidebar/Sidebar";
+import OfficeRun from "./components/OfficeRun/OfficeRun";
 import "./App.css";
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/NavBar" element={<DailyReport />} />
             <Route path="/Assessment" element={<Assessment />} />
             <Route path="/Daily" element={<Daily />} />
+            <Route path="/OfficeRun" element={<OfficeRun />}/>
           </Routes>
         </div>
       </BrowserRouter>

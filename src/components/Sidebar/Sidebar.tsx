@@ -5,6 +5,8 @@ import {
   faWarehouse,
   faCalendar,
   faNewspaper,
+  faRunning,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./Sidebar.css";
@@ -45,6 +47,26 @@ export default function Sidebar() {
                 className="FontAwesome"
               />
               <span className="link-text">Schedule</span>
+            </a>
+          </li>
+          <li className="side-item">
+            <a href="/OfficeRun" className="side-link">
+              <FontAwesomeIcon
+                icon={faRunning}
+                size="2xl"
+                className="FontAwesome"
+              />
+              <span className="link-text">Office Run</span>
+            </a>
+          </li>
+          <li className="side-item maow">
+            <a href="/OfficeRun" className="side-link maow" id="bruh">
+              <FontAwesomeIcon
+                icon={faGear}
+                size="2xl"
+                className="FontAwesome bruh"
+              />
+              <span className="link-text">Setting</span>
             </a>
           </li>
         </ul>

@@ -56,3 +56,8 @@
 .sidebar:hover .link-text{
     display: block;
 }
+
+.last-child{
+    align-self: flex-end;
+    margin-top: auto;
+}

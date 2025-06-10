@@ -1765,7 +1765,7 @@ function Inventory() {
       editable: true,
 
       // ⇢ Runs every time any cell in the row changes
-      valueGetter: (params) => {
+      valueGetter: (params : any) => {
         if (params.data.order) return params.data.order; // user override
 
         // same logic you already wrote
@@ -1779,7 +1779,7 @@ function Inventory() {
       },
 
       // ⇢ Purely cosmetic renderer
-      cellRenderer: (params) =>
+      cellRenderer: (params : any) =>
         params.data.order ?? ( // real order entered?
           <span className="light-color">Suggested: {params.value}</span>
         ),
@@ -1810,7 +1810,7 @@ function Inventory() {
       </LocalizationProvider>
     );
   }
-  function onChangeDate(params) {
+  function onChangeDate(params : any) {
     if (!params) return;
     const testDate = dayjs(params);
     setSelectedDate(testDate);
@@ -1843,7 +1843,7 @@ function Inventory() {
     setRowData(testData[selectedDate.format("YYYY-MM-DD")] ?? []);
   }, [selectedDate, testData]);
 
-  function onGridChange({ data, rowIndex }) {
+  function onGridChange({ data, rowIndex } : {data : any, rowIndex: any}) {
     const key = selectedDate.format("YYYY-MM-DD");
     setTestData((prev) => {
       const rows = [...prev[key]]; // clone array
@@ -1852,7 +1852,7 @@ function Inventory() {
     });
   }
 
-  function usageGetter(params) {
+  function usageGetter(params : any) {
     const weekStart = params.data.weekStart || 0;
     const inventoryAdded = params.data.inventoryAdded || 0;
     const weekEnd = params.data.weekEnd;
