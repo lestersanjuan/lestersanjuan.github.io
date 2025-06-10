@@ -50,7 +50,11 @@ jobs:
 
       # 5 ▸ Upload the static site as a Pages artifact
       - uses: actions/upload-pages-artifact@v3
-
+  exclude:
+    - vendor
+    - node_modules
+    - Gemfile
+    - Gemfile.lock
   deploy:
     needs: build
     runs-on: ubuntu-latest
