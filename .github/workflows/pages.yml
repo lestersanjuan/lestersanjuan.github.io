@@ -3,13 +3,13 @@ name: Build and Deploy Site
 
 on:
   push:
-    branches: ["main"] # build on every push to main
-  workflow_dispatch: # allow manual runs
+    branches: ["main"]
+  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
-  id-token: write # required for deploy-pages@v4
+  id-token: write
 
 concurrency:
   group: "pages"
@@ -18,23 +18,24 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      # 1 ▸ Check out your repo
+      # 1 ▸ Check out repository
       - uses: actions/checkout@v4
 
-      # 2 ▸ Node / Vite build (React assets)
+      # 2 ▸ Node / Vite build
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # satisfies react-router ≥7
+          node-version: "20"
           cache: "npm"
       - run: npm ci
-      - run: npm run build # outputs Vite bundle (dist/) into the repo
+      - run: npm run build               # -> dist/
 
-      # 3 ▸ Ruby / Bundler (Jekyll plugins and github-pages gem)
+      # 3 ▸ Ruby / Bundler (installs gems OUTSIDE vendor/)
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
+        env:
+          BUNDLE_PATH: ".bundle"         # keeps gems out of vendor/
         with:
           ruby-version: "3.3"
           bundler-cache: true
@@ -46,15 +47,11 @@ jobs:
         uses: actions/jekyll-build-pages@v1
         with:
           source: .
-          destination: ./_site # Jekyll copies the Vite bundle too
+          destination: ./_site           # Jekyll copies dist/ too
 
       # 5 ▸ Upload the static site as a Pages artifact
       - uses: actions/upload-pages-artifact@v3
-  exclude:
-    - vendor
-    - node_modules
-    - Gemfile
-    - Gemfile.lock
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
