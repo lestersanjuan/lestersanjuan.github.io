@@ -103,7 +103,7 @@ function Report({ date }: ReportProps): JSX.Element {
                 />
               </label>
               <label>
-                General Notes
+                <div>General Notes</div>
                 <textarea
                   name="generalNotes"
                   rows={10}

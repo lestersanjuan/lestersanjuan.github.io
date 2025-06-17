@@ -11,6 +11,12 @@ html, body{
 
 }
 
+:root{
+  --primary-color: #2b2b2b;
+  --secondary-color: #cecece;
+  --third-color: #313131;
+  --fourth-color: #030303;
+}
 
 main{
   margin-right: 20rem;

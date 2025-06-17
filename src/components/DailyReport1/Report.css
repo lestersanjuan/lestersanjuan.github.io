@@ -28,10 +28,12 @@ textarea{
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    background-color: rgb(59, 59, 59);
+    color: white;
 }
 .content>label {
     display: flex;
-    margin-top: 10px;
+    margin-top: 100px;
     justify-content: center;
     align-items: center;
     flex-direction: column; /* Add this line */
@@ -47,6 +49,7 @@ textarea::placeholder {
     justify-content: center;
     align-items: center;
 }
+
 
 .button-container{
     display: flex;

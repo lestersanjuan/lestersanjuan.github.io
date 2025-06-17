@@ -6,7 +6,37 @@ body {
     font-family:'Inter', Tahoma, Geneva, Verdana, sans-serif;
     background-color: aliceblue;
 }
+.primary-color-bg{
+    background-color: var(--primary-color);
+}
 
+.secondary-color-bg{
+    background-color: var(--secondary-color);
+}
+
+.primary-color{
+    color: var(--primary-color);
+}
+
+.secondary-color{
+    color: var(--secondary-color);
+}
+
+.third-color-bg {
+    background-color: var(--third-color);
+}
+
+.fourth-color-bg {
+    background-color: var(--fourth-color);
+}
+
+.third-color {
+    color: var(--third-color);
+}
+
+.fourth-color {
+    color: var(--fourth-color);
+}
 .container {
     display: grid;
     grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr 0.1fr;
@@ -79,9 +109,10 @@ h1{
     grid-column: 2;
 }
 .report {
-    color: rgb(0, 0, 0);
+    color: white;
     border-radius: 10px;
     filter: drop-shadow(0 0 0.12rem rgb(149, 149, 149));
+    background-color: rgb(27, 27, 27)
 }
 
 .report-styling {
