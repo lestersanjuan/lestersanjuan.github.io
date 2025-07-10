@@ -111,8 +111,8 @@ h1{
 .report {
     color: white;
     border-radius: 10px;
-    filter: drop-shadow(0 0 0.12rem rgb(149, 149, 149));
-    background-color: rgb(27, 27, 27)
+    background-color: rgb(49, 49, 49);
+    padding: 10px;
 }
 
 .report-styling {
