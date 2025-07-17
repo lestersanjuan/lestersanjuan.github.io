@@ -1,24 +1,24 @@
 from django.shortcuts import render
-from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from .models import DailyReport, EmployeePerformance, UserGroups
-from .serializers import UserGroupSerializer, DailyReportSerializer
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .models import DailyReport, EmployeePerformance, User
+from .serializers import UserSerializer, DailyReportSerializer
 
 class CurrentUserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        serializer = UserGroupSerializer(request.user)
+        serializer = UserSerializer(request.user)
         return Response(serializer.data)
 
-class UserGroupCreateView(generics.CreateAPIView):
-    queryset = UserGroups.objects.all()
-    serializer_class = UserGroupSerializer
+class CreateUserView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
 
-
+    
 class DailyReportListCreateView(generics.ListCreateAPIView):
     queryset = DailyReport.objects.all()
     serializer_class = DailyReportSerializer
@@ -32,7 +32,7 @@ class DailyReportDeleteView(generics.DestroyAPIView):
     queryset = DailyReport.objects.all()
     serializer_class = DailyReportSerializer
     lookup_field = 'date'
-    
+
 class DailyReportListCreateView(generics.ListCreateAPIView):
     queryset = DailyReport.objects.all()
     serializer_class = DailyReportSerializer

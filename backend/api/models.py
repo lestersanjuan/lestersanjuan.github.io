@@ -1,27 +1,42 @@
 # models.py
-from django.contrib.auth.models import AbstractUser
-from django.db import models
 import uuid
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.db.models import Q
 
-
-class UserGroups(AbstractUser):
-    USER_TYPE_CHOICES = [
-        ('employee', 'Employee'),
+class User(AbstractUser):
+    ROLE_CHOICES = [
+        ('employee',   'Employee'),
         ('supervisor', 'Supervisor'),
-        ('manager', 'Manager')
+        ('manager',    'Manager'),
     ]
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user_type = models.CharField(
-        max_length=10,
-        choices=USER_TYPE_CHOICES,
-        default='normal'
-    )
+    id   = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='employee')
+    name = models.CharField(max_length=20, null=True)
 
     def __str__(self):
-        return f"{self.username} ({self.user_type})"
+        return f"{self.username} ({self.role})"
+    
+class Employee(User):
+    class Meta: proxy = True
+    def save(self, *args, **kwargs):
+        self.role = 'manager'
+        super().save(*args, **kwargs)
+
+class Manager(User):
+    class Meta: proxy = True
+    def save(self, *args, **kwargs):
+        self.role = 'manager'
+        super().save(*args, **kwargs)
+
+class Supervisor(User):
+    class Meta: proxy = True
+    def save(self, *args, **kwargs):
+        self.role = 'supervisor'
+        super().save(*args, **kwargs)
 
 class EmployeePerformance(models.Model):
-    employee = models.ForeignKey(UserGroups, on_delete=models.CASCADE)
+    employee = models.ForeignKey(User, on_delete=models.CASCADE)
     performance_text = models.TextField(blank=True)
     report = models.ForeignKey('DailyReport', on_delete=models.CASCADE)
 
@@ -30,21 +45,25 @@ class EmployeePerformance(models.Model):
 
 class DailyReport(models.Model):
     date = models.DateField(unique=True)
-    shiftLeads = models.ManyToManyField(
-        UserGroups,
-        related_name='shift_leads',
-        limit_choices_to={'user_type': 'supervisor'}
+
+    supervisor = models.ManyToManyField(
+        User,
+        related_name='supervisor',
+        limit_choices_to=Q(role='supervisor') | Q(role='manager'),
+        blank=True,
     )
-    generalNotes = models.TextField(blank=True)
-    late = models.TextField(blank=True)
-    employeePerformance = models.ManyToManyField(
-        UserGroups,
+
+    general_notes     = models.TextField(blank=True)
+    late              = models.TextField(blank=True)
+    employee_perf     = models.ManyToManyField(
+        User,
         through='EmployeePerformance',
-        related_name='performances'
+        related_name='performances',
+        blank=True
     )
-    refills = models.TextField(blank=True)
-    customerComments = models.TextField(blank=True)
-    previousShiftNotes = models.TextField(blank=True)
+    refills           = models.TextField(blank=True)
+    customer_comments = models.TextField(blank=True)
+    previous_shift    = models.TextField(blank=True)
 
     def __str__(self):
         return f"Daily Report for {self.date}"
