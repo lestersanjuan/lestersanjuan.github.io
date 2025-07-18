@@ -39,6 +39,25 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
     
 
+# Nested serializers for the through‐models
+class EmployeePerformanceDaySerializer(serializers.ModelSerializer):
+    employee = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.filter(role="employee")
+    )
+    
+    class Meta:
+        model = EmployeePerformanceDay
+        fields = ("employee", "performance_text")
+
+
+class EmployeePerformanceNightSerializer(serializers.ModelSerializer):
+    employee = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.filter(role="employee")
+    )
+    
+    class Meta:
+        model = EmployeePerformanceNight
+        fields = ("employee", "performance_text")
 
 
 class PerformanceDaySerializer(serializers.ModelSerializer):
@@ -53,8 +72,98 @@ class PerformanceNightSerializer(serializers.ModelSerializer):
 
 
 class DailyReportSerializer(serializers.ModelSerializer):
-    day_performances   = PerformanceDaySerializer(source='employeeperformanceday_set', many=True)
-    night_performances = PerformanceNightSerializer(source='employeeperformancenight_set', many=True)
+    # Supervisors and managers only
+    supervisor_d = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=User.objects.filter(role__in=["supervisor", "manager"]),
+        required=False,
+    )
+    supervisor_n = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=User.objects.filter(role__in=["supervisor", "manager"]),
+        required=False,
+    )
+
+    # Nested performance lists
+    employee_perf_d = EmployeePerformanceDaySerializer(many=True, required=False)
+    employee_perf_n = EmployeePerformanceNightSerializer(many=True, required=False)
+
     class Meta:
         model = DailyReport
-        fields = '__all__'
+        fields = [
+            "supervisor_d",
+            "general_notes_d",
+            "late_d",
+            "employee_perf_d",
+            "refills_d",
+            "customer_comments_d",
+            "previous_shift_d",
+            "supervisor_n",
+            "general_notes_n",
+            "late_n",
+            "employee_perf_n",
+            "refills_n",
+            "customer_comments_n",
+            "previous_shift_n",
+        ]
+
+    def create(self, validated_data):
+        sup_d = validated_data.pop("supervisor_d", [])
+        perf_d = validated_data.pop("employee_perf_d", [])
+        sup_n = validated_data.pop("supervisor_n", [])
+        perf_n = validated_data.pop("employee_perf_n", [])
+
+        report = DailyReport.objects.create(**validated_data)
+        report.supervisor_d.set(sup_d)
+        report.supervisor_n.set(sup_n)
+
+        # Create through‐model entries for performances
+        for entry in perf_d:
+            EmployeePerformanceDay.objects.create(
+                report=report,
+                employee=entry["employee"],
+                performance_text=entry.get("performance_text", ""),
+            )
+        for entry in perf_n:
+            EmployeePerformanceNight.objects.create(
+                report=report,
+                employee=entry["employee"],
+                performance_text=entry.get("performance_text", ""),
+            )
+
+        return report
+
+    def update(self, instance, validated_data):
+        sup_d = validated_data.pop("supervisor_d", None)
+        perf_d = validated_data.pop("employee_perf_d", None)
+        sup_n = validated_data.pop("supervisor_n", None)
+        perf_n = validated_data.pop("employee_perf_n", None)
+
+        for attr, val in validated_data.items():
+            setattr(instance, attr, val)
+        instance.save()
+
+        if sup_d is not None:
+            instance.supervisor_d.set(sup_d)
+        if sup_n is not None:
+            instance.supervisor_n.set(sup_n)
+
+        if perf_d is not None:
+            EmployeePerformanceDay.objects.filter(report=instance).delete()
+            for entry in perf_d:
+                EmployeePerformanceDay.objects.create(
+                    report=instance,
+                    employee=entry["employee"],
+                    performance_text=entry.get("performance_text", ""),
+                )
+
+        if perf_n is not None:
+            EmployeePerformanceNight.objects.filter(report=instance).delete()
+            for entry in perf_n:
+                EmployeePerformanceNight.objects.create(
+                    report=instance,
+                    employee=entry["employee"],
+                    performance_text=entry.get("performance_text", ""),
+                )
+
+        return instance

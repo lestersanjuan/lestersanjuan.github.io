@@ -42,10 +42,12 @@ const initialFormValues: FormValues = {
 function Report({ date, day }: ReportProps): JSX.Element {
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
   const [leadsList, setLeadsList] = useState<User[]>([]);
-  const [employeeList, setEmployeeList] = useState<
-    Array<{ id: string; name: string }>
-  >([]);
+  const [employeeList, setEmployeeList] = useState<User[]>([]);
+  const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
   const [selectedLeads, setSelectedLeads] = useState<string[]>([]);
+  const [performanceDesc, setPerformanceDesc] = useState<
+    Record<string, string>
+  >({});
 
   useEffect(() => {
     getFormValues();
@@ -53,62 +55,38 @@ function Report({ date, day }: ReportProps): JSX.Element {
     api.get<User[]>("/api/supervisors/").then((res) => {
       setLeadsList(res.data);
     });
-
-    // fetch employees:
     api.get<User[]>("/api/employees/").then((res) => setEmployeeList(res.data));
-  }, []);
-  const getFormValues = () => {
-    api
-      .get(`http://127.0.0.1:8000/api/dailyreport/${date}/`)
-      .then((res) => res.data)
-      .then((data) => {
-        console.log(data, "This is the data");
-        if (day === "day") {
-          setFormValues({
-            shiftLeads: "",
-            generalNotes: data.general_notes_d,
-            late: "",
-            employeePerformance: "",
-            refills: "",
-            customerComments: "",
-            previousShiftNotes: "",
-          });
-        } else {
-          setFormValues({
-            shiftLeads: "",
-            generalNotes: data.general_notes_n,
-            late: "",
-            employeePerformance: "",
-            refills: "",
-            customerComments: "",
-            previousShiftNotes: "",
-          });
-        }
-      });
-  };
+  }, [date]);
+  const getFormValues = async () => {
+    try {
+      // await the result so that errors throw into our catch block
+      const res = await api.get(`/api/dailyreport/${date}/`);
+      const data = res.data;
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ): void => {
-    const { name, value } = event.target;
-    setFormValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    setStorageData((prev) => ({
-      ...prev,
-      [date]: {
-        ...formValues,
-        [name]: value,
-      },
-    }));
-  };
-
-  const handleSave = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    setStorageData((prev) => ({
-      ...prev,
-      [date]: formValues,
-    }));
+      if (day === "day") {
+        setFormValues({
+          shiftLeads: "",
+          generalNotes: data.general_notes_d,
+          late: "",
+          employeePerformance: "",
+          refills: "",
+          customerComments: "",
+          previousShiftNotes: "",
+        });
+      } else {
+        setFormValues({
+          shiftLeads: "",
+          generalNotes: data.general_notes_n,
+          late: "",
+          employeePerformance: "",
+          refills: "",
+          customerComments: "",
+          previousShiftNotes: "",
+        });
+      }
+    } catch (err) {
+      setFormValues(initialFormValues);
+    }
   };
 
   const handleAddLead = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -121,6 +99,49 @@ function Report({ date, day }: ReportProps): JSX.Element {
 
   const handleRemoveLead = (id: string) => {
     setSelectedLeads(selectedLeads.filter((x) => x !== id));
+  };
+
+  const handleAddEmployee = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const id = e.target.value;
+    if (id && !selectedEmployees.includes(id)) {
+      setSelectedEmployees([...selectedEmployees, id]);
+    }
+    e.target.value = "";
+  };
+  const handleRemoveEmployee = (id: string) => {
+    setSelectedEmployees(selectedEmployees.filter((x) => x !== id));
+  };
+  const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const empPerfArray = selectedEmployees.map((id) => ({
+      employee: id,
+      performance_text: performanceDesc[id] || "",
+    }));
+    const payload = {
+      supervisor_d: selectedLeads,
+      general_notes_d: formValues.generalNotes,
+      late_d: formValues.late,
+      employee_perf_d: empPerfArray,
+      refills_d: formValues.refills,
+      customer_comments_d: formValues.customerComments,
+      previous_shift_d: formValues.previousShiftNotes,
+
+      supervisor_n: [],
+      general_notes_n: "",
+      late_n: "",
+      employee_perf_n: [],
+      refills_n: "",
+      customer_comments_n: "",
+      previous_shift_n: "",
+    };
+
+    try {
+      const res = await api.post(`/api/dailyreport/upsert/${date}/`, payload);
+      alert("Saved successfully!");
+    } catch (err) {
+      console.error(err);
+      alert("Save failed");
+    }
   };
   return (
     <div>
@@ -168,7 +189,7 @@ function Report({ date, day }: ReportProps): JSX.Element {
                         className="remove-tag"
                         onClick={() => handleRemoveLead(id)}
                       >
-                        ×
+                        X
                       </button>
                     </span>
                   );
@@ -182,7 +203,6 @@ function Report({ date, day }: ReportProps): JSX.Element {
                   cols={40}
                   placeholder="General Notes"
                   value={formValues.generalNotes}
-                  onChange={handleChange}
                 />
               </label>
             </div>
@@ -196,19 +216,49 @@ function Report({ date, day }: ReportProps): JSX.Element {
                 cols={40}
                 placeholder="Anyone Late? __ Minutes"
                 value={formValues.late}
-                onChange={handleChange}
               />
             </label>
             <label>
-              <textarea
-                name="employeePerformance"
-                rows={2}
-                cols={40}
-                placeholder="Employees Performance"
-                value={formValues.employeePerformance}
-                onChange={handleChange}
-              />
+              <select defaultValue="" onChange={handleAddEmployee}>
+                <option value="" disabled>
+                  Select Employee
+                </option>
+                {employeeList.map((u) => (
+                  <option key={u.id} value={u.id}>
+                    {u.full_name}
+                  </option>
+                ))}
+              </select>
             </label>
+            <div className="selected-tags">
+              {selectedEmployees.map((id) => {
+                const user = employeeList.find((u) => u.id === id);
+                return (
+                  <span key={id} className="tag">
+                    {user?.full_name ?? id}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveEmployee(id)}
+                    >
+                      X
+                    </button>
+                    <textarea
+                      name={id}
+                      rows={2}
+                      cols={40}
+                      placeholder="How did this employee do?"
+                      value={performanceDesc[id] || ""}
+                      onChange={(e) =>
+                        setPerformanceDesc((prev) => ({
+                          ...prev,
+                          [id]: e.target.value,
+                        }))
+                      }
+                    />
+                  </span>
+                );
+              })}
+            </div>
           </div>
           <div className="previous-shift">
             <h2>Previous Shifts</h2>
@@ -219,7 +269,6 @@ function Report({ date, day }: ReportProps): JSX.Element {
                 cols={40}
                 placeholder="Refills Done? Previous Supervisor?"
                 value={formValues.refills}
-                onChange={handleChange}
               />
             </label>
             <label>
@@ -229,7 +278,6 @@ function Report({ date, day }: ReportProps): JSX.Element {
                 cols={40}
                 placeholder="Previous Shift Notes"
                 value={formValues.previousShiftNotes}
-                onChange={handleChange}
               />
             </label>
           </div>
@@ -242,7 +290,6 @@ function Report({ date, day }: ReportProps): JSX.Element {
                 cols={40}
                 placeholder="Customer Comments"
                 value={formValues.customerComments}
-                onChange={handleChange}
               />
             </label>
           </div>
