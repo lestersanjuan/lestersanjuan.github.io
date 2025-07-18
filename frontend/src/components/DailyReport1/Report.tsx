@@ -19,8 +19,8 @@ interface LocalStorage {
 
 interface ReportProps {
   date: string;
+  day: "day" | "night";
 }
-
 const initialFormValues: FormValues = {
   shiftLeads: "",
   generalNotes: "",
@@ -31,10 +31,12 @@ const initialFormValues: FormValues = {
   previousShiftNotes: "",
 };
 
-function Report({ date }: ReportProps): JSX.Element {
+function Report({ date, day }: ReportProps): JSX.Element {
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
-  const [storageData, setStorageData] = useState<LocalStorage>({}); // renamed from localStorage to avoid confusion
-  const [previousDate, setPreviousDate] = useState<string>(date);
+  const [leadsList, setLeadsList] = useState<
+    Array<{ id: string; name: string }>
+  >([]);
+  const [selectedLeads, setSelectedLeads] = useState<typeof leadsList>([]);
 
   useEffect(() => {
     getFormValues();
@@ -45,27 +47,29 @@ function Report({ date }: ReportProps): JSX.Element {
       .then((res) => res.data)
       .then((data) => {
         console.log(data, "This is the data");
-        setFormValues({
-          shiftLeads: "",
-          generalNotes: "",
-          late: "",
-          employeePerformance: "",
-          refills: "",
-          customerComments: "",
-          previousShiftNotes: "",
-        });
+        if (day === "day") {
+          setFormValues({
+            shiftLeads: "",
+            generalNotes: data.general_notes_d,
+            late: "",
+            employeePerformance: "",
+            refills: "",
+            customerComments: "",
+            previousShiftNotes: "",
+          });
+        } else {
+          setFormValues({
+            shiftLeads: "",
+            generalNotes: data.general_notes_n,
+            late: "",
+            employeePerformance: "",
+            refills: "",
+            customerComments: "",
+            previousShiftNotes: "",
+          });
+        }
       });
   };
-  useEffect(() => {
-    if (date !== previousDate) {
-      if (date in storageData) {
-        setFormValues(storageData[date]);
-      } else {
-        setFormValues(initialFormValues);
-      }
-      setPreviousDate(date);
-    }
-  }, [date, storageData, previousDate]);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -114,14 +118,23 @@ function Report({ date }: ReportProps): JSX.Element {
             <div className="text-area-notes">
               <label>
                 Shift Leads and Supervisors
-                <textarea
+                <select
                   name="shiftLeads"
-                  rows={2}
-                  cols={40}
-                  placeholder="Shift Leads/Soup"
                   value={formValues.shiftLeads}
-                  onChange={handleChange}
-                />
+                  onChange={(e) =>
+                    setFormValues((fv) => ({
+                      ...fv,
+                      shiftLeads: e.target.value,
+                    }))
+                  }
+                >
+                  <option value="">(choose shift lead)</option>
+                  {soupDayList.map((user) => (
+                    <option key={user.id} value={user.name}>
+                      {user.name}
+                    </option>
+                  ))}
+                </select>
               </label>
               <label>
                 <div>General Notes</div>

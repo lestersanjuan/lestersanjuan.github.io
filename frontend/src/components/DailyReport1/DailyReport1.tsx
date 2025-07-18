@@ -27,13 +27,13 @@ function Daily() {
       <div className="box report" id="day-shift">
         <h2>Day shift</h2>
         <div className="report-styling">
-          <Report date={selectedDate} />
+          <Report date={selectedDate} day={"day"} />
         </div>
       </div>
       <div className="box report" id="night-shift">
         <h2>Night shift</h2>
         <div className="report-styling">
-          <Report date={selectedDate} />
+          <Report date={selectedDate} day={"night"} />
         </div>
       </div>
     </div>
