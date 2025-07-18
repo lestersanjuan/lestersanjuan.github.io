@@ -6,10 +6,23 @@ from django.contrib.auth.hashers import make_password
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
 
-    class Meta:
-        model  = User
-        fields = ["id", "username", "name", "role", "password"]
+    full_name = serializers.SerializerMethodField(read_only=True)
 
+    class Meta:
+        model = User
+        # include the first/last names so get_full_name() works,
+        # plus our new full_name
+        fields = [
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "full_name",
+            "role",
+            "password"
+        ]
+    def get_full_name(self, obj):
+        return obj.get_full_name() or obj.username
     def create(self, validated_data):
         # ensure password is hashed
         if "password" in validated_data:

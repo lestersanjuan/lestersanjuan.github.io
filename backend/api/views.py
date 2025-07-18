@@ -19,22 +19,26 @@ class CreateUserView(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
 class EmployeeListView(generics.ListAPIView):
-    queryset = Employee.objects.all()
-    serializer_class = UserSerializer
+    serializer_class   = UserSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        return User.objects.filter(role="employee")
 class SupervisorListView(generics.ListAPIView):
-    queryset = Supervisor.objects.all()
-    serializer_class = UserSerializer
+    serializer_class   = UserSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return User.objects.filter(role="supervisor")
 
 class ManagerListView(generics.ListAPIView):
-    queryset = Manager.objects.all()
-    serializer_class = UserSerializer
+    serializer_class   = UserSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        return User.objects.filter(role="manager")
 
-    
+
 class DailyReportRetrieveUpdateView(generics.RetrieveUpdateAPIView):
     queryset = DailyReport.objects.all()
     serializer_class = DailyReportSerializer

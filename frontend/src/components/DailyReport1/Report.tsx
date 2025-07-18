@@ -3,6 +3,14 @@ import { FormControlLabel, Checkbox } from "@mui/material";
 import "./Report.css";
 import api from "../../tools/api.js";
 
+interface User {
+  id: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  full_name: string;
+  role: string;
+}
 interface FormValues {
   shiftLeads: string;
   generalNotes: string;
@@ -33,13 +41,21 @@ const initialFormValues: FormValues = {
 
 function Report({ date, day }: ReportProps): JSX.Element {
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
-  const [leadsList, setLeadsList] = useState<
+  const [leadsList, setLeadsList] = useState<User[]>([]);
+  const [employeeList, setEmployeeList] = useState<
     Array<{ id: string; name: string }>
   >([]);
-  const [selectedLeads, setSelectedLeads] = useState<typeof leadsList>([]);
+  const [selectedLeads, setSelectedLeads] = useState<string[]>([]);
 
   useEffect(() => {
     getFormValues();
+    // fetch supervisors:
+    api.get<User[]>("/api/supervisors/").then((res) => {
+      setLeadsList(res.data);
+    });
+
+    // fetch employees:
+    api.get<User[]>("/api/employees/").then((res) => setEmployeeList(res.data));
   }, []);
   const getFormValues = () => {
     api
@@ -94,6 +110,18 @@ function Report({ date, day }: ReportProps): JSX.Element {
       [date]: formValues,
     }));
   };
+
+  const handleAddLead = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const id = e.target.value;
+    if (id && !selectedLeads.includes(id)) {
+      setSelectedLeads([...selectedLeads, id]);
+    }
+    e.target.value = "";
+  };
+
+  const handleRemoveLead = (id: string) => {
+    setSelectedLeads(selectedLeads.filter((x) => x !== id));
+  };
   return (
     <div>
       <span>
@@ -118,24 +146,34 @@ function Report({ date, day }: ReportProps): JSX.Element {
             <div className="text-area-notes">
               <label>
                 Shift Leads and Supervisors
-                <select
-                  name="shiftLeads"
-                  value={formValues.shiftLeads}
-                  onChange={(e) =>
-                    setFormValues((fv) => ({
-                      ...fv,
-                      shiftLeads: e.target.value,
-                    }))
-                  }
-                >
-                  <option value="">(choose shift lead)</option>
-                  {soupDayList.map((user) => (
-                    <option key={user.id} value={user.name}>
-                      {user.name}
+                <select defaultValue="" onChange={handleAddLead}>
+                  <option value="" disabled>
+                    Select supervisor…
+                  </option>
+                  {leadsList.map((u) => (
+                    <option key={u.id} value={u.id}>
+                      {u.full_name}
                     </option>
                   ))}
                 </select>
               </label>
+              <div className="selected-tags">
+                {selectedLeads.map((id) => {
+                  const user = leadsList.find((u) => u.id === id);
+                  return (
+                    <span key={id} className="tag">
+                      {user?.full_name ?? id}
+                      <button
+                        type="button"
+                        className="remove-tag"
+                        onClick={() => handleRemoveLead(id)}
+                      >
+                        ×
+                      </button>
+                    </span>
+                  );
+                })}
+              </div>
               <label>
                 <div>General Notes</div>
                 <textarea
