@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormControlLabel, Checkbox } from "@mui/material";
 import "./Report.css";
+import api from "../../tools/api.js";
 
 interface FormValues {
   shiftLeads: string;
@@ -35,6 +36,26 @@ function Report({ date }: ReportProps): JSX.Element {
   const [storageData, setStorageData] = useState<LocalStorage>({}); // renamed from localStorage to avoid confusion
   const [previousDate, setPreviousDate] = useState<string>(date);
 
+  useEffect(() => {
+    getFormValues();
+  }, []);
+  const getFormValues = () => {
+    api
+      .get(`http://127.0.0.1:8000/api/dailyreport/${date}/`)
+      .then((res) => res.data)
+      .then((data) => {
+        console.log(data, "This is the data");
+        setFormValues({
+          shiftLeads: "",
+          generalNotes: "",
+          late: "",
+          employeePerformance: "",
+          refills: "",
+          customerComments: "",
+          previousShiftNotes: "",
+        });
+      });
+  };
   useEffect(() => {
     if (date !== previousDate) {
       if (date in storageData) {

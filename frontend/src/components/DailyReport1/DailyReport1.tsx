@@ -3,7 +3,8 @@ import "./DailyReport1.css";
 import Report from "./Report";
 
 function Daily() {
-  const [selectedDate, setSelectedDate] = useState("");
+  const todayString = new Date().toISOString().slice(0, 10);
+  const [selectedDate, setSelectedDate] = useState<string>(todayString);
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);

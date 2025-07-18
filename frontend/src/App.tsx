@@ -9,6 +9,8 @@ import Daily from "./components/DailyReport1/DailyReport1";
 import Home from "./components/Home/Home";
 import Sidebar from "./components/Sidebar/Sidebar";
 import OfficeRun from "./components/OfficeRun/OfficeRun";
+import ProtectedRoute from "./components/Utility/ProtectedRoute";
+import Login from "./components/Utility/Login";
 import "./App.css";
 
 function App() {
@@ -18,14 +20,17 @@ function App() {
         <Sidebar />
         <div id="contents">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Schedule" element={<Schedule />} />
-            <Route path="/DailyReport" element={<DailyReport />} />
-            <Route path="/Inventory" element={<Inventory />} />
-            <Route path="/NavBar" element={<DailyReport />} />
-            <Route path="/Assessment" element={<Assessment />} />
-            <Route path="/Daily" element={<Daily />} />
-            <Route path="/OfficeRun" element={<OfficeRun />}/>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/Schedule" element={<Schedule />} />
+              <Route path="/DailyReport" element={<DailyReport />} />
+              <Route path="/Inventory" element={<Inventory />} />
+              <Route path="/NavBar" element={<DailyReport />} />
+              <Route path="/Assessment" element={<Assessment />} />
+              <Route path="/Daily" element={<Daily />} />
+              <Route path="/OfficeRun" element={<OfficeRun />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
       </BrowserRouter>
