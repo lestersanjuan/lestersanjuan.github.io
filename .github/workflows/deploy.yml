@@ -48,8 +48,8 @@ jobs:
           # Create directory to store static files
           mkdir -p ./dist
 
-          # Copy static files from container to host
-          docker cp temp-container:/app/dist ./dist/
+          # Copy static files from container to host (contents only)
+          docker cp temp-container:/app/dist/. ./dist/
 
           # Clean up container
           docker rm temp-container
