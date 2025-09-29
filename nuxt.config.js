@@ -20,6 +20,7 @@ const createSitemapRoutes = async () => {
   return routes;
 }
 
+
 const constructFeedItem = (post, hostname) => {
   const url = `${hostname}/blog/${post.slug}`;
   return {
