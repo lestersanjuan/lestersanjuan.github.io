@@ -27,28 +27,21 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          target: builder
-          tags: nuxt-app:builder
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          # Pass build args if needed for Firebase/Analytics
-          build-args: |
-            API_KEY=${{ secrets.API_KEY }}
-            AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}
-            PROJECT_ID=${{ secrets.PROJECT_ID }}
-            STORAGE_BUCKET=${{ secrets.STORAGE_BUCKET }}
-            MESSAGING_SENDER_ID=${{ secrets.MESSAGING_SENDER_ID }}
-            APP_ID=${{ secrets.APP_ID }}
-            MEASUREMENT_ID=${{ secrets.MEASUREMENT_ID }}
-
-      - name: Create container and copy static files
+      - name: Build Docker image and extract static files
         run: |
+          # Build the Docker image
+          docker build --target builder \
+            --build-arg API_KEY="${{ secrets.API_KEY }}" \
+            --build-arg AUTH_DOMAIN="${{ secrets.AUTH_DOMAIN }}" \
+            --build-arg PROJECT_ID="${{ secrets.PROJECT_ID }}" \
+            --build-arg STORAGE_BUCKET="${{ secrets.STORAGE_BUCKET }}" \
+            --build-arg MESSAGING_SENDER_ID="${{ secrets.MESSAGING_SENDER_ID }}" \
+            --build-arg APP_ID="${{ secrets.APP_ID }}" \
+            --build-arg MEASUREMENT_ID="${{ secrets.MEASUREMENT_ID }}" \
+            -t nuxt-builder .
+
           # Create a container from the builder image
-          docker create --name temp-container nuxt-app:builder
+          docker create --name temp-container nuxt-builder
 
           # Create directory to store static files
           mkdir -p ./dist
