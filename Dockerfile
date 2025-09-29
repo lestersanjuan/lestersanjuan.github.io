@@ -1,12 +1,15 @@
 # ---------- Build stage ----------
-	FROM node:16-alpine AS builder
+	FROM node:18-alpine AS builder
 
 	WORKDIR /app
-	
+
+	# Install dependencies for native modules
+	RUN apk add --no-cache git python3 make g++
+
 	# Yarn Classic via Corepack
 	RUN corepack enable && corepack prepare yarn@1.22.22 --activate
-	
-	# Only copy manifests first
+
+	# Copy package files first for better layer caching
 	COPY package.json yarn.lock ./
 	
 	# Install deps
@@ -34,9 +37,12 @@
 	# Disable telemetry; set production env
 	ENV NUXT_TELEMETRY_DISABLED=1 \
 		NODE_ENV=production
-	
+
 	# Static site build
 	RUN yarn generate
+
+	# Remove source files to reduce image size (keep only dist and static files)
+	RUN rm -rf .nuxt src pages components layouts middleware plugins store content assets lang .git .github node_modules
 	
 	# ---------- Runtime stage ----------
 	FROM nginx:alpine AS runner
