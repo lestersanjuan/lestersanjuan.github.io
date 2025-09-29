@@ -36,13 +36,14 @@
 	
 	# Disable telemetry; set production env
 	ENV NUXT_TELEMETRY_DISABLED=1 \
-		NODE_ENV=production
+		NODE_ENV=production \
+		NODE_OPTIONS="--openssl-legacy-provider"
 
 	# Static site build
 	RUN yarn generate
 
-	# Remove source files to reduce image size (keep only dist and static files)
-	RUN rm -rf .nuxt src pages components layouts middleware plugins store content assets lang .git .github node_modules
+	# Remove source files to reduce image size (keep only dist, plugins and necessary static files)
+	RUN rm -rf .nuxt src pages components layouts middleware store content assets lang .git .github
 	
 	# ---------- Runtime stage ----------
 	FROM nginx:alpine AS runner
