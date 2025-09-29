@@ -159,7 +159,7 @@ const nuxtConfig = {
   },
 
   router: {
-    middleware: [],
+    middleware: ['hash-redirect'],
     scrollBehavior(to, from, savedPosition) {
       if (savedPosition) {
         return savedPosition

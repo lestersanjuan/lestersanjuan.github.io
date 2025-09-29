@@ -2,7 +2,7 @@
   <div>
     <TheNavBar/>
     <Nuxt />
-    <TheFooter />
+    <!-- Footer removed per request -->
   </div>
 </template>
 
