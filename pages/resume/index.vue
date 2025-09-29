@@ -4,7 +4,7 @@
       <div data-aos="fade-up"  class="bg-gray-900 py-3 px-6 flex justify-between items-center">
         <h1 class="text-lg flex flex-row font-semibold text-gray-200"><span class="pr-1">{{ $t('nav.resume') }}</span>
           - <span class="pl-1 hidden md:block">{{ $config.name }}</span></h1>
-        <a v-if="$config.resume && $config.resume.pdfUrl" target="_blank" rel="noreferrer" :href="$config.resume.pdfUrl" :download="`${$config.name}.pdf`"
+        <a target="_blank" rel="noreferrer" :href="$config.resume.pdfUrl" :download="`${$config.name}.pdf`"
            class="inline-flex text-indigo-500 hover:text-indigo-600 items-center px-2 py-1 border
            border-transparent shadow-sm text-sm font-medium
            rounded-md btn-color-style">
@@ -14,22 +14,17 @@
           {{ $t('download') }}
         </a>
       </div>
-      <div class="px-4 py-5 sm:p-6">
-        <Resume :resume="resume" />
+      <div class="px-4 py-5 sm:p-6 flex items-center justify-center">
+        <div class="w-full dark:text-gray-500 text-gray-800 font-bold">
+          <PdfViewer class="shadow-md" :src="$config.resume.pdfUrl"/>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Resume from '@/components/resume/Resume.vue'
-
 export default {
-  components: { Resume },
-  async asyncData({ $content }) {
-    const resume = await $content('resume').fetch().catch(() => ({}))
-    return { resume }
-  },
   head() {
     return {
       title: `lester - resume`

@@ -41,7 +41,7 @@ export default {
   },
   resume: {
     enabled: true,
-    pdfUrl: '/Lester_Resume_SWE.pdf' // add files in static folder
+    pdfUrl: '/RESUME_GYAN_KARN_DARK.pdf' // add files in static folder
   },
   uses: {
     enabled: false,

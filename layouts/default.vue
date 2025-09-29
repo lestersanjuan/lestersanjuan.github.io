@@ -20,6 +20,7 @@ html {
   scroll-behavior: smooth;
 }
 
+#home,
 #projects,
 #resume {
   scroll-margin-top: 4rem; /* account for sticky navbar height (h-16) */

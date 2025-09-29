@@ -51,6 +51,12 @@ jobs:
           # Copy static files from container to host (contents only)
           docker cp temp-container:/app/dist/. ./dist/
 
+      - name: Create 404.html for GitHub Pages SPA fallback
+        run: |
+          if [ -f ./dist/index.html ]; then
+            cp ./dist/index.html ./dist/404.html
+          fi
+
           # Clean up container
           docker rm temp-container
 

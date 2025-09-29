@@ -2,7 +2,6 @@
   <div>
     <section id="home">
       <HeroSection/>
-      <Recommendations v-if="$config.recommendations.enabled"/>
     </section>
 
     <section id="projects" class="pt-6">

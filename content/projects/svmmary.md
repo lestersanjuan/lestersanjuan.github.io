@@ -15,3 +15,4 @@ twitter: ""
 - Implemented a dynamic, responsive UI in Tailwind CSS with an interactive, sticky header to display user-specific session history.
 - Built REST API endpoints to interface with external AI models, optimizing performance and real-time processing of content.
 - Persisted user data and generated files to S3 for durable storage.
+
