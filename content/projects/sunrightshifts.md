@@ -1,6 +1,6 @@
 ---
 id: 7
-title: SunrightShifts
+title: SunrightHub
 description: Real-time scheduling and HR ops portal; automated scheduling and streamlined collaboration.
 tech: React TypeScript Express.js PostgreSQL
 logo: /images/karngyan-com.png
@@ -15,4 +15,3 @@ twitter: ""
 - Integrated automated scheduling with fairness and policy constraints, reducing manual workload and scheduling time by 20%.
 - Implemented auth, roles, user-facing React interface, and admin dashboards.
 - Ran iterative usability testing sessions to validate reliability, friction, and navigation.
-

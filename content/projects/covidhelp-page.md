@@ -1,10 +1,10 @@
 ---
 id: 2
-title: covidhelp.page
+title:
 description: it helped match plasma and blood donors, i18n supported with 5 indian languages. also had a vaccine notifier built in
 tech: golang vue aws
 logo: /images/covidhelp-page.png
-website: https://covidhelp.page
+website: "#"
 github: https://github.com/karngyan/covidhelp.ui
 twitter: gyankarn
 ---
@@ -44,7 +44,7 @@ indignantibus una celanda tum utro [inposuit fertur].
 Confinia [cuspidis agrosque], miserrima, pro inquit vibrantia litus minus
 primis: terrae Hippodamen reclusi de. Sede iunctior hoc nascendi guttura iussa
 dixit ab Lemnos plausu tenui celebrare a vulnere detrahit. Traderet canos
-*fluctus* dicta. Ambit pulmonibus sic montes vertere reposcunt facti inposito
+_fluctus_ dicta. Ambit pulmonibus sic montes vertere reposcunt facti inposito
 caelo.
 
 [cuspidis agrosque]: http://www.custodit.org/hac-et
