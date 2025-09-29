@@ -1,0 +1,141 @@
+{
+  "name": "Lester San Juan",
+  "title": "Software Engineer",
+  "location": "Irvine, CA",
+  "email": "lestersanjuan0515@gmail.com",
+  "phone": "+1 (510) 229-8303",
+  "links": [
+    { "label": "GitHub", "url": "https://github.com/lestersanjuan" },
+    { "label": "LinkedIn", "url": "https://linkedin.com/in/lestersanjuan" }
+  ],
+  "summary": "Software Engineer with experience building full‑stack products, APIs, and data‑driven features. Comfortable across frontend (Vue/React), backend (Node/FastAPI), and ML/NLP pipelines. Strong focus on usability, automation, and measurable impact.",
+  "skills": [
+    {
+      "category": "Programming Languages",
+      "items": ["Python", "JavaScript", "TypeScript", "HTML/CSS"]
+    },
+    {
+      "category": "Frameworks & Libraries",
+      "items": ["Svelte", "Vue", "React", "Django"]
+    },
+    {
+      "category": "Technologies & Data",
+      "items": ["PostgreSQL", "SQLite", "FastAPI", "Docker"]
+    }
+  ],
+  "experience": [
+    {
+      "company": "SCA SNR Corporation",
+      "title": "Software Engineer",
+      "location": "Irvine, CA",
+      "start": "July 2025",
+      "end": "Present",
+      "highlights": [
+        "Integrated QuickBooks API for automated invoicing, replacing manual invoice creation to streamline the order‑to‑invoice workflow and reduce processing time.",
+        "Developed capabilities for receivables, shipment tracking, product catalog with image uploads, and admin dashboard with business auditing for scalable multi‑tenant operations.",
+        "Implemented secure JWT authentication with admin/manager/customer roles and cross‑business data access controls.",
+        "Created dynamic, business‑scoped filtering for products/orders with reactive UI updates and secure API integration."
+      ]
+    },
+    {
+      "company": "SNR Tea Studio",
+      "title": "Freelance Software Engineer",
+      "location": "Fremont, CA",
+      "start": "December 2024",
+      "end": "Present",
+      "highlights": [
+        "Built a backend job scheduling system optimizing task assignment to improve efficiency and reduce admin workload.",
+        "Shipped custom operations software to streamline store processes, cutting administrative labor by ~40%.",
+        "Automated manual workflows, reducing scheduling errors and improving task tracking.",
+        "Ran user feedback sessions with staff to refine the UI for clarity and ease of use."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "GetMentored",
+      "role": "Project Lead",
+      "tech": ["Vue.js", "Tailwind", "Express.js", "Node.js", "FaunaDB"],
+      "start": "Jan 2024",
+      "end": "Jun 2024",
+      "highlights": [
+        "Engineered communication between front‑end and back‑end systems for seamless UX and content handling.",
+        "Used FaunaDB for robust storage, retrieval, and real‑time updates; contributed to open‑source libs.",
+        "Translated client goals into concrete website/software requirements and milestones.",
+        "Prototyped user flows in Figma and tested journeys to improve intuitiveness."
+      ]
+    },
+    {
+      "name": "SVMMARY: Summarization App",
+      "role": "Full‑Stack Developer",
+      "tech": ["Next.js", "React", "Supabase", "Tailwind CSS"],
+      "start": "Mar 2025",
+      "end": "Present",
+      "highlights": [
+        "Built an AI‑assisted app that summarizes long‑form text using Next.js and React.",
+        "Added a real‑time sidebar that fetches and displays snippets from the backend.",
+        "Designed a responsive UI in Tailwind with a sticky history panel for user‑specific summaries.",
+        "Exposed REST endpoints to integrate with external AI models and tuned for performance."
+      ]
+    },
+    {
+      "name": "Dynamic Scheduler",
+      "role": "Developer",
+      "tech": ["Python"],
+      "start": "Jan 2025",
+      "end": "Mar 2025",
+      "highlights": [
+        "Automated part‑time work scheduling with Python and custom optimization for 20+ employees.",
+        "Handled availability, preferences, and fairness while avoiding conflicts.",
+        "Enabled real‑time constraint editing with instant recomputation.",
+        "Cut schedule creation time by ~50%."
+      ]
+    },
+    {
+      "name": "SunrightHub",
+      "role": "Developer",
+      "tech": ["React", "TypeScript", "Express.js"],
+      "start": "Jan 2025",
+      "end": "Present",
+      "highlights": [
+        "Unified operations in a single hub for team collaboration and resource management.",
+        "Integrated automated scheduling to reduce manual workload and errors.",
+        "Established a modular TypeScript React codebase for rapid adoption and real‑time updates.",
+        "Validated usability via user tests; improved task completion and navigation."
+      ]
+    },
+    {
+      "name": "Yelp Sentiment Analyzer",
+      "role": "Developer",
+      "tech": ["Python", "PyTorch", "DistilBERT", "NLP"],
+      "start": "Sept 2024",
+      "end": "Dec 2024",
+      "highlights": [
+        "Built sentiment classifier for Yelp reviews; achieved >90% accuracy.",
+        "Leveraged SBERT embeddings for rich text features.",
+        "Used dropout and custom loss to improve generalization by ~25% over baselines.",
+        "Optimized training with adaptive learning rates and class balancing."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "University of California, Irvine",
+      "degree": "B.S. in Software Engineering",
+      "start": "",
+      "end": "June 2025",
+      "coursework": [
+        "Data Structures",
+        "Algorithms",
+        "Software Engineering",
+        "Database Management",
+        "Computer Networks",
+        "Artificial Intelligence",
+        "Web Development",
+        "Machine Learning",
+        "User‑Centered Design",
+        "Human‑Computer Interaction"
+      ]
+    }
+  ]
+}
