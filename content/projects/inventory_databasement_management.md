@@ -1,4 +1,15 @@
-#Multi‑Business Order, Inventory, and Operations Platform
+---
+id: 4
+title: Inventory Database Management
+description: Multi-business order, inventory and operations platform with QuickBooks integration.
+tech: SvelteKit TypeScript Tailwind Node.js
+logo: /images/lookatx-dev.png
+website: "#"
+github: "#"
+twitter: ""
+---
+
+# Multi‑Business Order, Inventory, and Operations Platform
 
 A production-grade SvelteKit application for multi-tenant order management, inventory control, warehouse operations reporting, and QuickBooks integration. I architected and implemented the end-to-end web app: authentication/session, API client, role-based access, multi-business context switching, order and shipment workflows, inventory controls, reporting, and a polished responsive UI.
 
