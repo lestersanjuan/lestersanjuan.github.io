@@ -105,8 +105,8 @@ export default {
       hero: {
         iBlogTech: 'i blog tech',
         haveALook: 'have a look',
-        friendlyNeighborhood: 'your friendly neighborhood',
-        description: 'i am a software engineer and a part time freelancer. i blog tech, write a weekend newsletter called software shots, and tinker with side projects every now n then.',
+        friendlyNeighborhood: 'Hey, I’m Lester 👋',
+        description: "I build software, break software, and sometimes even fix it. Most days I’m tinkering with random side projects, learning new tech, or just trying to make computers behave. When I’m not coding, I’m probably grabbing boba, writing my newsletter, or chasing down a bug that only shows up at 3am.",
         words: ['developer', 'designer', 'engineer', 'programmer', 'encoder'],
       },
       githubCalendar: {
