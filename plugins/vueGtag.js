@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueGtag from 'vue-gtag'
 
-Vue.use(VueGtag, {
-  config: { id: 'G-7GV60QQY22' }
-})
+// Disable Google Analytics by default; enable only when an ID is provided via runtime config
+export default ({ $config }) => {
+  const gaId = $config.googleAnalyticsV4?.id
+  if (!gaId) return
+  Vue.use(VueGtag, { config: { id: gaId } })
+}
