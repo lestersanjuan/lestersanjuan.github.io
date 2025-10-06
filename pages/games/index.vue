@@ -7,10 +7,10 @@
 
            <div class="mt-6">
              <div class="p-4 border border-dashed border-gray-700 rounded">
-               <h2 class="text-lg font-bold mb-2 text-gray-200">bouncy balls</h2>
-               <p class="text-sm text-gray-400 mb-3">click on canvas to add more balls.</p>
+               <h2 class="text-lg font-bold mb-2 text-gray-200">spacee</h2>
+               <p class="text-sm text-gray-400 mb-3">arrow keys / wasd to move the placeholder ship. You build the rest.</p>
                <div class="w-full" style="height: calc(100vh - 8rem); min-height: calc(100vh - 8rem);">
-                 <CanvasPlayground />
+                 <Spacee />
                </div>
              </div>
            </div>
@@ -21,12 +21,12 @@
  </template>
 
 <script>
-import CanvasPlayground from '@/components/games/CanvasPlayground.vue'
+ import Spacee from '@/components/games/spacee/Spacee.vue'
 
 export default {
-  components: { CanvasPlayground },
+   components: { Spacee },
   head() {
-    return { title: 'games - canvas playground' }
+     return { title: 'games - spacee' }
   }
 }
 </script>
