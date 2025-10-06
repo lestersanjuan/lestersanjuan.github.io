@@ -4,9 +4,6 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2">
           <h1 class="text-2xl tracking-tight font-extrabold text-gray-200">games</h1>
-          <p class="mt-2 max-w-2xl text-sm leading-7 text-gray-400">
-            quick canvas playground. edit files under <code class="px-1 bg-gray-800 rounded">components/games</code> to make something fun.
-          </p>
 
           <div class="mt-6 space-y-6">
             <div class="p-4 border border-dashed border-gray-700 rounded">
@@ -19,14 +16,6 @@
           </div>
         </div>
         <aside class="lg:col-span-1 lg:sticky lg:top-20 h-max">
-          <div class="p-4 border border-dashed border-gray-700 rounded">
-            <h3 class="text-gray-200 font-bold">how to use</h3>
-            <ul class="mt-2 list-disc list-inside text-sm text-gray-400 space-y-1">
-              <li>put new experiments in <code class="px-1 bg-gray-800 rounded">components/games/</code></li>
-              <li>import and place them on this page</li>
-              <li>canvas auto-resizes; keep sidebar sticky for quick play</li>
-            </ul>
-          </div>
         </aside>
       </div>
     </div>
