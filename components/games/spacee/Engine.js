@@ -103,8 +103,14 @@ export class GameEngine {
     this.input = new Input(window)
     this.input.attachCanvas(canvas)
     this._loop = this._loop.bind(this)
-    this.resizeObserver = new ResizeObserver(() => this._resizeToCanvasClient())
-    this.resizeObserver.observe(this.canvas)
+    // Observe size changes; fallback to window resize if ResizeObserver unavailable
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => this._resizeToCanvasClient())
+      this.resizeObserver.observe(this.canvas)
+    } else {
+      this._onResize = () => this._resizeToCanvasClient()
+      window.addEventListener('resize', this._onResize)
+    }
     this._resizeToCanvasClient()
   }
   _resizeToCanvasClient() {
@@ -135,7 +141,8 @@ export class GameEngine {
   destroy() {
     this.pause()
     this.input.destroy(window)
-    this.resizeObserver.disconnect()
+    if (this.resizeObserver) this.resizeObserver.disconnect()
+    if (this._onResize) window.removeEventListener('resize', this._onResize)
   }
 }
 
@@ -194,6 +201,23 @@ export class SpaceeScene extends Scene {
     // Example setup: one ship centered
     this.player = this.add(new Ship({ position: new Vector2(this.width/2, this.height/2) }))
     // TODO: add spawners/managers here when you implement game logic
+  }
+  update(dt, ctx, input) {
+    // demo mode: if no movement keys pressed, slowly rotate to show the loop is alive
+    const moving = input.isDown('ArrowLeft') || input.isDown('ArrowRight') || input.isDown('ArrowUp') || input.isDown('a') || input.isDown('d') || input.isDown('w')
+    if (!moving && this.player) {
+      this.player.rotation += 0.6 * dt
+    }
+    super.update(dt, ctx, input)
+  }
+  draw(ctx) {
+    super.draw(ctx)
+    // HUD/instructions (kept minimal; adjust styling as desired)
+    ctx.save()
+    ctx.fillStyle = 'rgba(255,255,255,0.6)'
+    ctx.font = '12px Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial'
+    ctx.fillText('spacee: arrow keys / wasd to steer. demo rotates if idle.', 12, 20)
+    ctx.restore()
   }
 }
 
