@@ -102,7 +102,7 @@ export class GameEngine {
     this.running = false
     this.input = new Input(window)
     this.input.attachCanvas(canvas)
-    this._loop = this._loop.abind(this)
+    this._loop = this._loop.bind(this)
     // Observe size changes; fallback to window resize if ResizeObserver unavailable
     if (typeof ResizeObserver !== 'undefined') {
       this.resizeObserver = new ResizeObserver(() => this._resizeToCanvasClient())
