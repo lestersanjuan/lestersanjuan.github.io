@@ -152,10 +152,10 @@ export class Ship extends Entity {
   constructor(opts = {}) {
     super({ radius: 14, ...opts })
     this.velocity = new Vector2()
-    this.thrust = 180 // px/s^2
-    this.friction = 0.98
+    this.thrust = 350 // px/s^2 - MUCH FASTER
+    this.friction = 0.96
     this.shootCooldown = 0
-    this.shootRate = 0.15 // seconds between shots
+    this.shootRate = 0.1 // seconds between shots - faster shooting
   }
   update(dt, ctx, input, world) {
     // Auto-rotate toward mouse
@@ -197,7 +197,7 @@ export class Ship extends Entity {
     }
   }
   shoot(world) {
-    const bulletSpeed = 400
+    const bulletSpeed = 650 // MUCH FASTER bullets
     const bullet = new Bullet({
       position: this.position.clone(),
       velocity: new Vector2(
@@ -256,7 +256,8 @@ export class Enemy extends Entity {
   constructor(opts = {}) {
     super({ radius: 16, ...opts })
     this.velocity = new Vector2()
-    this.speed = 60 + Math.random() * 40
+    this.baseSpeed = opts.baseSpeed || 120
+    this.speed = this.baseSpeed + Math.random() * 80 // Much faster and more variation
     this.health = 1
   }
   update(dt, ctx, input, world) {
@@ -310,7 +311,9 @@ export class SpaceeScene extends Scene {
     this.player = this.add(new Ship({ position: new Vector2(this.width/2, this.height/2) }))
     this.score = 0
     this.enemySpawnTimer = 0
-    this.enemySpawnRate = 2 // seconds between spawns
+    this.enemySpawnRate = 1.2 // Start spawning faster
+    this.difficultyTimer = 0
+    this.enemyBaseSpeed = 120 // Track base speed for progressive difficulty
   }
   
   spawnEnemy() {
@@ -336,7 +339,10 @@ export class SpaceeScene extends Scene {
         y = Math.random() * this.height
         break
     }
-    this.add(new Enemy({ position: new Vector2(x, y) }))
+    this.add(new Enemy({ 
+      position: new Vector2(x, y),
+      baseSpeed: this.enemyBaseSpeed
+    }))
   }
   
   checkCollisions() {
@@ -374,13 +380,20 @@ export class SpaceeScene extends Scene {
   update(dt, ctx, input) {
     super.update(dt, ctx, input)
     
+    // Progressive difficulty - increase every 5 seconds
+    this.difficultyTimer += dt
+    if (this.difficultyTimer >= 5) {
+      this.enemyBaseSpeed += 15 // Enemies get 15% faster every 5 seconds
+      this.difficultyTimer = 0
+    }
+    
     // Spawn enemies
     this.enemySpawnTimer += dt
     if (this.enemySpawnTimer >= this.enemySpawnRate) {
       this.spawnEnemy()
       this.enemySpawnTimer = 0
-      // Gradually increase spawn rate
-      this.enemySpawnRate = Math.max(0.8, this.enemySpawnRate * 0.98)
+      // Aggressively increase spawn rate
+      this.enemySpawnRate = Math.max(0.3, this.enemySpawnRate * 0.96)
     }
     
     // Check collisions
@@ -394,9 +407,16 @@ export class SpaceeScene extends Scene {
     ctx.fillStyle = 'rgba(255,255,255,0.8)'
     ctx.font = '16px Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial'
     ctx.fillText(`Score: ${this.score}`, 12, 24)
+    
+    // Difficulty indicator
+    const difficultyLevel = Math.floor((this.enemyBaseSpeed - 120) / 15) + 1
+    const enemyCount = this.entities.filter(e => e instanceof Enemy).length
+    ctx.fillStyle = difficultyLevel > 5 ? '#ef4444' : difficultyLevel > 3 ? '#f59e0b' : 'rgba(255,255,255,0.7)'
+    ctx.fillText(`Level: ${difficultyLevel} | Enemies: ${enemyCount}`, 12, 44)
+    
     ctx.font = '12px Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial'
     ctx.fillStyle = 'rgba(255,255,255,0.6)'
-    ctx.fillText('WASD to move • Left click to shoot', 12, 46)
+    ctx.fillText('WASD to move • Left click to shoot', 12, 64)
     ctx.restore()
   }
 }
